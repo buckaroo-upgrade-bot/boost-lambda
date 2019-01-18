@@ -1,40 +1,32 @@
-# Copyright 2016 Edward Diener
-# Distributed under the Boost Software License, Version 1.0.
-# (See accompanying file LICENSE_1_0.txt or copy at http://boost.org/LICENSE_1_0.txt)
-
 language: cpp
+sudo: true
+dist: trusty
 
-sudo: false
-
-python: "2.7"
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-6
+      - gcc-6
+  homebrew:
+    taps:
+      - facebook/fb
+    packages:
+      - buck
 
 os:
   - linux
   - osx
 
-branches:
-  only:
-    - master
-    - develop
+env:
+  - BUCKAROO_VERSION=buckaroo-redux-alpha-11
 
-install:
-  - cd ..
-  - git clone -b $TRAVIS_BRANCH --depth 1 https://github.com/boostorg/boost.git boost-root
-  - cd boost-root
-  - git submodule update --init tools/build
-  - git submodule update --init libs/config
-  - git submodule update --init tools/boostdep
-  - cp -r $TRAVIS_BUILD_DIR/* libs/lambda
-  - python tools/boostdep/depinst/depinst.py lambda
-  - ./bootstrap.sh
-  - ./b2 headers
+osx_image: xcode9.3
+
+before_install:
+  - ./travis/before-install-$TRAVIS_OS_NAME.sh
 
 script:
-  - TOOLSET=gcc,clang
-  - if [ $TRAVIS_OS_NAME == osx ]; then TOOLSET=clang; fi
-  - ./b2 --verbose-test libs/config/test//config_info toolset=$TOOLSET || true
-  - ./b2 libs/lambda/test toolset=$TOOLSET
-
-notifications:
-  email:
-    on_success: always
+  - ./buckaroo-client install
+  - buck build -c ui.superconsole=DISABLED //:lambda
