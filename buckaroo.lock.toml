@@ -1,4 +1,4 @@
-manifest = "d06362868aefe239067411bacdf2cefd3d1f34770c4c7fd3fa55df760d529cd4"
+manifest = "02a5c895bd3f8fc4cadc66a4bc6887ea927ceea3a9724edb81a02fc4ec8d8493"
 
 [[dependency]]
 package = "github.com/buckaroo-pm/boost-any"
@@ -58,7 +58,7 @@ revision = "6da7695406e00e3f59c47f1b0a369710db6e51f8"
 
 [lock."github.com/buckaroo-pm/boost-any"]
 versions = [ "branch=master" ]
-revision = "81b98182cb3314fab2ac4a30fc2cccb43b7cff51"
+revision = "995fefc2fe5a65da93c65d3eea725808a70024aa"
 
 [lock."github.com/buckaroo-pm/boost-assert"]
 versions = [ "branch=master" ]
